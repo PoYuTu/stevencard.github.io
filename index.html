@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Merry Christmas</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: white;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background-color: #A9A9A9;
+    }
+
+    .text {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      font-size: 30px;
+      font-weight: bold;
+      color: black;
+      z-index: 1;
+      animation: showText 5s ease-in-out forwards, scaleText 2s ease-in-out forwards;
+      opacity: 0;
+    }
+
+    .text2 {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      font-size: 80px;
+      font-weight: bold;
+      color: red;
+      z-index: 1;
+      animation: showText 8s ease-in-out forwards, scaleText 5s ease-in-out forwards;
+      opacity: 0;
+      animation-delay: 2s;
+    }
+
+    .floating-image {
+      position: absolute;
+      bottom: 20px; /* 距離底部的距離 */
+      right: 20px; /* 距離右邊的距離 */
+      animation: floatImage 5s ease-in-out infinite; /* 搖晃動畫設置 */
+    }
+
+    .audio-controls {
+      position: absolute;
+      top: 50%;
+      left: 20%;
+      display: flex;
+      align-items: center;
+    }
+
+    #play-button {
+      width: 0;
+      height: 0;
+      border-top: 15px solid transparent;
+      border-bottom: 15px solid transparent;
+      border-left: 20px solid black;
+      cursor: pointer;
+      margin-right: 20px;
+    }
+
+    /* 隐藏播放器的界面 */
+    audio {
+      display: none;
+    }
+
+
+    @keyframes showText {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    @keyframes scaleText {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    @keyframes floatImage {
+      0%, 100% {
+        transform: translateX(0); /* 起始和結束位置 */
+      }
+      50% {
+        transform: translateX(20px); /* 搖晃距離 */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="text">Kolead wish you</div>
+    <div class="text2">Merry Christmas</div>
+    <img class="floating-image" src="https://png.pngtree.com/png-clipart/20230509/original/pngtree-christmas-kind-santa-claus-png-image_9154037.png" height="50%" alt="Floating Image">
+  </div>
+   <script>
+    function getRandomPosition() {
+      // 隨機生成位置
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight;
+      return { x, y };
+    }
+
+    function createCircle() {
+      const circle = document.createElement('div');
+      circle.classList.add('circle');
+
+      const size = Math.floor(Math.random() * 100) + 50; // 隨機大小範圍為50至150
+      circle.style.width = `${size}px`;
+      circle.style.height = `${size}px`;
+
+      const { x, y } = getRandomPosition();
+      circle.style.left = `${x}px`;
+      circle.style.top = `${y}px`;
+
+      document.body.appendChild(circle);
+
+      // 調整z-index以免遮蓋文字
+      circle.style.zIndex = '-1';
+
+      // 添加隨機動畫效果
+      const duration = Math.random() * 6 + 3; // 隨機動畫持續時間3至9秒
+      circle.style.animation = `moveCircle ${duration}s linear infinite`;
+
+      // 使用transform和opacity實現漸變動畫
+      const endScale = Math.random() * 0.5 + 0.2; // 隨機結束時大小範圍為0.2至0.7
+      const endOpacity = Math.random() * 0.5 + 0.2; // 隨機結束時透明度範圍為0.2至0.7
+      circle.style.transform = `scale(${endScale})`;
+      circle.style.opacity = endOpacity;
+
+      return circle;
+    }
+
+    // 創建多個圓形
+    const numCircles = 30;
+    for (let i = 0; i < numCircles; i++) {
+      createCircle();
+    }
+  </script>
+
+  <style>
+    /* 添加動畫效果 */
+    @keyframes moveCircle {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(0.2);
+        opacity: 0;
+      }
+    }
+  </style>
+
+  <div class="audio-controls">
+    <div id="play-button"></div>
+    <audio id="audio" controls>
+      <source src="https://drive.google.com/uc?export=download&id=1GYI3xxHT6iekGiwuWxhK15zjdPTuo0Rk" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <script>
+    var audio = document.getElementById('audio');
+    var playButton = document.getElementById('play-button');
+
+    playButton.addEventListener('click', function() {
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    });
+  </script>
+</body>
+</html>
